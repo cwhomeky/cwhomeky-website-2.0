@@ -7,13 +7,12 @@
   <meta name="description" content="Dedicated, Honest, and Trustworthy Real Estate representation across Central Kentucky ($300k-$900k+). Brokered by Pennington Properties.">
   
   <style>
-    /* EXACT BRAND COLOR SYSTEM */
     :root {
-      --brand-blue: #0A5896;         /* Logo Sapphire / Ocean Blue */
-      --navy-primary: #19388a;       /* Deep Navy */
-      --midnight-blue: #0f245c;      /* Midnight Blue */
-      --slate-gray: #82858A;         /* Logo Slate Gray */
-      --gold-accent: #f1b418;        /* Gold Accent */
+      --brand-blue: #0A5896;
+      --navy-primary: #19388a;
+      --midnight-blue: #0f245c;
+      --slate-gray: #82858A;
+      --gold-accent: #f1b418;
       --card-white: #ffffff;
       --light-bg: #f5f8fb;
       --text-dark: #1b263b;
@@ -58,7 +57,7 @@
       font-weight: bold;
     }
 
-    /* Main Navigation */
+    /* Navigation Bar */
     header {
       background-color: var(--navy-primary);
       box-shadow: 0 4px 15px rgba(10, 88, 150, 0.25);
@@ -482,7 +481,7 @@
 
   <!-- Floating Fixed Logo Badge (Bottom Left) -->
   <a href="#top" class="floating-logo-badge" title="Patrick C. Washington | CWHOMEKY - Return to Top">
-    <img src="logo.png" class="site-logo-target" alt="CWHOMEKY Logo">
+    <img src="logo.jpg" class="site-logo-target" alt="CWHOMEKY Logo">
   </a>
 
   <!-- Top Utility Header -->
@@ -500,7 +499,7 @@
   <header>
     <div class="container nav-flex">
       <a href="https://cwhomeky.com" class="brand-group">
-        <img src="logo.png" alt="CWHOMEKY Logo" class="brand-logo-img site-logo-target">
+        <img src="logo.jpg" alt="CWHOMEKY Logo" class="brand-logo-img site-logo-target">
         <div class="logo-text">CWHOMEKY <span>Patrick C. Washington</span></div>
       </a>
       <nav>
@@ -555,7 +554,7 @@
     <div class="search-box">
       <div class="search-title">
         <span class="inline-cwhomeky-badge">
-          <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
+          <img src="logo.jpg" class="site-logo-target" alt="CWHOMEKY">
         </span>
         <span>Central Kentucky Property Search</span>
       </div>
@@ -633,7 +632,7 @@
     <div class="section-title-wrap">
       <h2 class="section-title">
         <span class="inline-cwhomeky-badge">
-          <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
+          <img src="logo.jpg" class="site-logo-target" alt="CWHOMEKY">
         </span>
         Active Listings Feed
       </h2>
@@ -681,7 +680,7 @@
     <div class="search-box" style="border-top-color: var(--gold-accent);">
       <div class="search-title">
         <span class="inline-cwhomeky-badge">
-          <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
+          <img src="logo.jpg" class="site-logo-target" alt="CWHOMEKY">
         </span>
         <span>Inquire with Patrick C. Washington</span>
       </div>
@@ -733,7 +732,7 @@
           <p>Dedication, Trust, and Honesty across Central Kentucky.</p>
           <p style="margin-top: 10px; color: var(--gold-accent); font-weight: bold;">
             <span class="inline-cwhomeky-badge">
-              <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
+              <img src="logo.jpg" class="site-logo-target" alt="CWHOMEKY">
             </span>
             cwhomeky.com
           </p>
@@ -759,7 +758,7 @@
       <div class="footer-bottom">
         <div>
           <span class="inline-cwhomeky-badge">
-            <img src="logo.png" class="site-logo-target" alt="CWHOMEKY" style="width: 18px; height: 18px;">
+            <img src="logo.jpg" class="site-logo-target" alt="CWHOMEKY" style="width: 18px; height: 18px;">
           </span>
           © 2026 Patrick C. Washington | CWHOMEKY. Brokered by Pennington Properties. All Rights Reserved.
         </div>
@@ -768,32 +767,26 @@
     </div>
   </footer>
 
-  <!-- Dynamic Relative Path Resolver for GitHub Pages -->
+  <!-- Multi-Extension Auto Resolver -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const pathSegments = window.location.pathname.split('/').filter(Boolean);
-      const basePath = window.location.pathname.endsWith('/') 
-        ? window.location.pathname 
-        : window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
-
       const candidateFiles = [
+        'logo.jpg',
         'logo.png',
+        'logo .jpg',
         'logo_clean.png',
         'CWHOMEKY_LOGO_2.png',
-        'CWHOMEKY LOGO2.jpg',
-        'CWHOMEKY_LOGO_2.PNG'
+        'CWHOMEKY LOGO2.jpg'
       ];
 
       document.querySelectorAll('.site-logo-target').forEach((img) => {
         let attemptIndex = 0;
-        
         function tryNext() {
           if (attemptIndex < candidateFiles.length) {
-            img.src = basePath + candidateFiles[attemptIndex];
+            img.src = candidateFiles[attemptIndex];
             attemptIndex++;
           }
         }
-        
         img.onerror = tryNext;
         tryNext();
       });
