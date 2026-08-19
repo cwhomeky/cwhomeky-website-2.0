@@ -7,13 +7,13 @@
   <meta name="description" content="Dedicated, Honest, and Trustworthy Real Estate representation across Central Kentucky ($300k-$900k+). Brokered by Pennington Properties.">
   
   <style>
-    /* EXACT BRAND PALETTE */
+    /* EXACT BRAND COLOR SYSTEM */
     :root {
-      --brand-blue: #0A5896;         /* Logo Ocean / Sapphire Blue */
-      --navy-primary: #19388a;       /* Deep Navy Blue */
+      --brand-blue: #0A5896;         /* Logo Sapphire / Ocean Blue */
+      --navy-primary: #19388a;       /* Deep Navy */
       --midnight-blue: #0f245c;      /* Midnight Blue */
-      --slate-gray: #82858A;         /* Slate Gray Accent */
-      --gold-accent: #f1b418;        /* Warm Gold Accent */
+      --slate-gray: #82858A;         /* Logo Slate Gray */
+      --gold-accent: #f1b418;        /* Gold Accent */
       --card-white: #ffffff;
       --light-bg: #f5f8fb;
       --text-dark: #1b263b;
@@ -58,7 +58,7 @@
       font-weight: bold;
     }
 
-    /* Main Navigation Bar */
+    /* Main Navigation */
     header {
       background-color: var(--navy-primary);
       box-shadow: 0 4px 15px rgba(10, 88, 150, 0.25);
@@ -477,32 +477,12 @@
       .floating-logo-badge { bottom: 16px; left: 16px; width: 62px; height: 62px; }
     }
   </style>
-
-  <!-- Auto Path Fallback Script -->
-  <script>
-    function handleLogoError(img) {
-      const candidates = [
-        'logo_clean.png',
-        'CWHOMEKY_LOGO_2.png',
-        'CWHOMEKY LOGO2.jpg',
-        'logo.png',
-        'images/logo_clean.png',
-        'assets/logo_clean.png',
-        'images/CWHOMEKY_LOGO_2.png'
-      ];
-      let currentIndex = parseInt(img.dataset.failIndex || '0', 10);
-      if (currentIndex < candidates.length) {
-        img.dataset.failIndex = currentIndex + 1;
-        img.src = candidates[currentIndex];
-      }
-    }
-  </script>
 </head>
 <body id="top">
 
   <!-- Floating Fixed Logo Badge (Bottom Left) -->
   <a href="#top" class="floating-logo-badge" title="Patrick C. Washington | CWHOMEKY - Return to Top">
-    <img src="logo_clean.png" onerror="handleLogoError(this)" alt="CWHOMEKY Logo">
+    <img src="logo.png" class="site-logo-target" alt="CWHOMEKY Logo">
   </a>
 
   <!-- Top Utility Header -->
@@ -520,7 +500,7 @@
   <header>
     <div class="container nav-flex">
       <a href="https://cwhomeky.com" class="brand-group">
-        <img src="logo_clean.png" onerror="handleLogoError(this)" alt="CWHOMEKY Logo" class="brand-logo-img">
+        <img src="logo.png" alt="CWHOMEKY Logo" class="brand-logo-img site-logo-target">
         <div class="logo-text">CWHOMEKY <span>Patrick C. Washington</span></div>
       </a>
       <nav>
@@ -575,7 +555,7 @@
     <div class="search-box">
       <div class="search-title">
         <span class="inline-cwhomeky-badge">
-          <img src="logo_clean.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+          <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
         </span>
         <span>Central Kentucky Property Search</span>
       </div>
@@ -653,7 +633,7 @@
     <div class="section-title-wrap">
       <h2 class="section-title">
         <span class="inline-cwhomeky-badge">
-          <img src="logo_clean.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+          <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
         </span>
         Active Listings Feed
       </h2>
@@ -676,7 +656,7 @@
       <div class="resources-box">
         <h3 class="resources-title">Client Resources</h3>
         <ul class="resources-list">
-          <li><a href="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" target="_blank" rel="noopener">▶ Browse Current Inventory on Paragon</a></li>
+          <li><a href="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" target="_blank" rel="noopener">▶ Browse Current Inventory</a></li>
           <li><a href="#contact">▶ Free Home Market Valuation</a></li>
           <li><a href="#contact">▶ Military PCS Relocation Help</a></li>
           <li><a href="tel:5022305113">▶ Direct Phone Consultation</a></li>
@@ -701,7 +681,7 @@
     <div class="search-box" style="border-top-color: var(--gold-accent);">
       <div class="search-title">
         <span class="inline-cwhomeky-badge">
-          <img src="logo_clean.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+          <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
         </span>
         <span>Inquire with Patrick C. Washington</span>
       </div>
@@ -753,7 +733,7 @@
           <p>Dedication, Trust, and Honesty across Central Kentucky.</p>
           <p style="margin-top: 10px; color: var(--gold-accent); font-weight: bold;">
             <span class="inline-cwhomeky-badge">
-              <img src="logo_clean.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+              <img src="logo.png" class="site-logo-target" alt="CWHOMEKY">
             </span>
             cwhomeky.com
           </p>
@@ -779,7 +759,7 @@
       <div class="footer-bottom">
         <div>
           <span class="inline-cwhomeky-badge">
-            <img src="logo_clean.png" onerror="handleLogoError(this)" alt="CWHOMEKY" style="width: 18px; height: 18px;">
+            <img src="logo.png" class="site-logo-target" alt="CWHOMEKY" style="width: 18px; height: 18px;">
           </span>
           © 2026 Patrick C. Washington | CWHOMEKY. Brokered by Pennington Properties. All Rights Reserved.
         </div>
@@ -787,6 +767,38 @@
       </div>
     </div>
   </footer>
+
+  <!-- Dynamic Relative Path Resolver for GitHub Pages -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+      const basePath = window.location.pathname.endsWith('/') 
+        ? window.location.pathname 
+        : window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+
+      const candidateFiles = [
+        'logo.png',
+        'logo_clean.png',
+        'CWHOMEKY_LOGO_2.png',
+        'CWHOMEKY LOGO2.jpg',
+        'CWHOMEKY_LOGO_2.PNG'
+      ];
+
+      document.querySelectorAll('.site-logo-target').forEach((img) => {
+        let attemptIndex = 0;
+        
+        function tryNext() {
+          if (attemptIndex < candidateFiles.length) {
+            img.src = basePath + candidateFiles[attemptIndex];
+            attemptIndex++;
+          }
+        }
+        
+        img.onerror = tryNext;
+        tryNext();
+      });
+    });
+  </script>
 
 </body>
 </html>
