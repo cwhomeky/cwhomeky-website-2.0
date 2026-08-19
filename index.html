@@ -1,31 +1,794 @@
-<!-- Header Logo & Branding -->
-<header class="site-header">
-  <div class="brand-container">
-    <img src="CWHOMEKY_LOGO_2.png" alt="Patrick C. Washington - Pennington Properties" class="brand-logo-inline">
-    <span class="brand-name">cwhomeky</span>
-  </div>
-  <nav class="nav-links">
-    <a href="#active-listings">Active Listings</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CWHOMEKY | Patrick C. Washington - Pennington Properties</title>
+  <meta name="description" content="Dedicated, Honest, and Trustworthy Real Estate representation across Central Kentucky ($300k-$900k+). Brokered by Pennington Properties.">
+  
+  <style>
+    /* EXACT BRAND COLOR SYSTEM */
+    :root {
+      --brand-blue: #0A5896;         /* Logo Sapphire / Ocean Blue */
+      --navy-primary: #19388a;       /* Deep Navy */
+      --midnight-blue: #0f245c;      /* Midnight Blue */
+      --slate-gray: #82858A;         /* Logo Slate Gray */
+      --gold-accent: #f1b418;        /* Gold Accent */
+      --card-white: #ffffff;
+      --light-bg: #f5f8fb;
+      --text-dark: #1b263b;
+      --text-muted: #5e6d82;
+      --border-light: #d8e2ec;
+    }
 
-<!-- Main Listings Section -->
-<main class="main-content">
-  <section id="active-listings" class="listings-section">
-    <h2>Active Listings</h2>
-    <div class="listings-container">
-      <!-- Active Listings Feed / Grid Embed Goes Here -->
-      <div class="listing-box">
-        <a href="/listings" class="btn-primary">View All Current Properties</a>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Top Utility Bar */
+    .top-header {
+      background-color: var(--midnight-blue);
+      color: #ffffff;
+      padding: 10px 0;
+      font-size: 13px;
+      border-bottom: 2px solid var(--gold-accent);
+    }
+    .top-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .top-header a {
+      color: var(--gold-accent);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Main Navigation */
+    header {
+      background-color: var(--navy-primary);
+      box-shadow: 0 4px 15px rgba(10, 88, 150, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-logo-img {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      object-fit: contain;
+      display: block;
+      border-radius: 50%;
+      background: transparent;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+    }
+    .logo-text {
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+    .logo-text span {
+      color: var(--gold-accent);
+      font-size: 13.5px;
+      font-weight: 500;
+      display: block;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 22px;
+      align-items: center;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold-accent); }
+    .btn-nav-cta {
+      background-color: var(--gold-accent);
+      color: #000000 !important;
+      padding: 9px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      text-decoration: none;
+    }
+
+    /* Slogan Banner */
+    .slogan-strip {
+      background: var(--midnight-blue);
+      color: var(--gold-accent);
+      text-align: center;
+      padding: 9px;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Hero Section */
+    .hero-showcase {
+      position: relative;
+      background: linear-gradient(135deg, rgba(15, 36, 92, 0.94) 0%, rgba(10, 88, 150, 0.92) 100%), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: #ffffff;
+      padding: 65px 0 75px 0;
+      border-bottom: 5px solid var(--gold-accent);
+    }
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-details { flex: 1.2; min-width: 320px; }
+    .hero-photo-card {
+      flex: 0.8;
+      min-width: 280px;
+      text-align: center;
+    }
+    .hero-photo-card img {
+      width: 100%;
+      max-width: 330px;
+      height: 390px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 12px;
+      border: 4px solid #ffffff;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+    }
+    .hero-tag {
+      display: inline-block;
+      background-color: var(--gold-accent);
+      color: #000000;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .hero-price {
+      font-size: 22px;
+      color: var(--gold-accent);
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+    .hero-stats-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .hero-stat-pill {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(6px);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    /* Property Search Bar */
+    .search-section {
+      margin-top: -40px;
+      position: relative;
+      z-index: 50;
+      margin-bottom: 50px;
+    }
+    .search-box {
+      background: var(--card-white);
+      border-radius: 8px;
+      padding: 28px 30px;
+      box-shadow: 0 10px 30px rgba(15, 36, 92, 0.12);
+      border-top: 5px solid var(--brand-blue);
+      border-left: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .search-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy-primary);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .search-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 15px;
+      align-items: flex-end;
+    }
+    .search-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--slate-gray);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .search-field select, .search-field input {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      font-size: 14px;
+      background: #f8fbfe;
+      color: var(--text-dark);
+    }
+    .btn-search {
+      background-color: var(--brand-blue);
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+      font-size: 14px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 3px 8px rgba(10, 88, 150, 0.3);
+    }
+    .btn-search:hover { background-color: var(--navy-primary); }
+
+    /* Active Listings Section */
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--navy-primary);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 4px;
+    }
+
+    .paragon-banner-box {
+      background: linear-gradient(135deg, var(--navy-primary) 0%, var(--brand-blue) 100%);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 45px 30px;
+      text-align: center;
+      margin-bottom: 60px;
+      box-shadow: 0 10px 28px rgba(10, 88, 150, 0.25);
+      border: 2px solid var(--gold-accent);
+    }
+    .paragon-banner-box h3 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .paragon-banner-box p {
+      color: #e2e8f0;
+      max-width: 700px;
+      margin: 0 auto 25px auto;
+      font-size: 16px;
+    }
+    .btn-paragon-main {
+      background-color: var(--gold-accent);
+      color: #000000;
+      padding: 16px 36px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 17px;
+      display: inline-block;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    .btn-paragon-main:hover {
+      transform: translateY(-2px);
+      background-color: #ffd043;
+    }
+
+    /* Split About & Resources Section */
+    .about-split {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 35px;
+      background: var(--card-white);
+      border-radius: 8px;
+      padding: 40px 30px;
+      margin-bottom: 60px;
+      box-shadow: 0 4px 20px rgba(15, 36, 92, 0.06);
+      border: 1px solid var(--border-light);
+    }
+    .resources-box {
+      background: #f8fbfe;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 25px;
+    }
+    .resources-title {
+      color: var(--navy-primary);
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      border-bottom: 2px solid var(--gold-accent);
+      padding-bottom: 6px;
+    }
+    .resources-list {
+      list-style: none;
+    }
+    .resources-list li {
+      margin-bottom: 12px;
+    }
+    .resources-list a {
+      color: var(--brand-blue);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .resources-list a:hover { color: var(--navy-primary); }
+    .about-text h2 {
+      color: var(--navy-primary);
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+    .about-text p {
+      color: #333333;
+      margin-bottom: 16px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Floating Fixed Logo Badge (Bottom Left) */
+    .floating-logo-badge {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 9999;
+      width: 82px;
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s, filter 0.2s;
+      filter: drop-shadow(0 6px 16px rgba(15, 36, 92, 0.5));
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+    .floating-logo-badge:hover {
+      transform: scale(1.1) translateY(-3px);
+      filter: drop-shadow(0 10px 22px rgba(15, 36, 92, 0.65));
+    }
+    .floating-logo-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 50%;
+    }
+
+    /* Inline Logo Badge */
+    .inline-cwhomeky-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      vertical-align: middle;
+    }
+    .inline-cwhomeky-badge img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: inline-block;
+      border-radius: 50%;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--midnight-blue);
+      color: #ffffff;
+      border-top: 4px solid var(--gold-accent);
+      padding: 50px 0 20px 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 35px;
+      margin-bottom: 40px;
+    }
+    .footer-col h4 {
+      color: var(--gold-accent);
+      font-size: 16px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .footer-col p, .footer-col a {
+      color: #ccd7e2;
+      font-size: 13.5px;
+      text-decoration: none;
+      line-height: 1.7;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 12px;
+      color: #9cb1c9;
+    }
+
+    @media (max-width: 850px) {
+      .about-split { grid-template-columns: 1fr; }
+      .hero-grid { flex-direction: column-reverse; text-align: center; }
+      .floating-logo-badge { bottom: 16px; left: 16px; width: 62px; height: 62px; }
+    }
+  </style>
+
+  <!-- Auto Fallback Image Script -->
+  <script>
+    function handleLogoError(img) {
+      const candidates = [
+        './CWHOMEKY_LOGO_2.png',
+        './CWHOMEKY LOGO.png',
+        './logo.png',
+        './images/CWHOMEKY_LOGO_2.png',
+        './assets/CWHOMEKY_LOGO_2.png',
+        './CWHOMEKY_LOGO_2.PNG'
+      ];
+      let currentIndex = parseInt(img.dataset.failIndex || '0', 10);
+      if (currentIndex < candidates.length) {
+        img.dataset.failIndex = currentIndex + 1;
+        img.src = candidates[currentIndex];
+      }
+    }
+  </script>
+</head>
+<body id="top">
+
+  <!-- Floating Fixed Logo Badge (Bottom Left) -->
+  <a href="#top" class="floating-logo-badge" title="Patrick C. Washington | CWHOMEKY - Return to Top">
+    <img src="./CWHOMEKY_LOGO_2.png" onerror="handleLogoError(this)" alt="CWHOMEKY Logo">
+  </a>
+
+  <!-- Top Utility Header -->
+  <div class="top-header">
+    <div class="container top-header-flex">
+      <div>📍 216 South Mulberry Street, Elizabethtown, KY 42701 | Brokered by Pennington Properties</div>
+      <div>
+        Direct: <a href="tel:5022305113">📞 502-230-5113</a> &nbsp;|&nbsp; 
+        <a href="mailto:pcw@cwhomeky.com">✉️ pcw@cwhomeky.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header>
+    <div class="container nav-flex">
+      <a href="https://cwhomeky.com" class="brand-group">
+        <img src="./CWHOMEKY_LOGO_2.png" onerror="handleLogoError(this)" alt="CWHOMEKY Logo" class="brand-logo-img">
+        <div class="logo-text">CWHOMEKY <span>Patrick C. Washington</span></div>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#search">Search MLS</a></li>
+          <li><a href="#active-listings">Active Listings</a></li>
+          <li><a href="#about">About Patrick</a></li>
+          <li><a href="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" target="_blank" rel="noopener">Browse All Listings</a></li>
+          <li><a href="#contact" class="btn-nav-cta">Free Home Evaluation</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Slogan Banner -->
+  <div class="slogan-strip">
+    DEDICATION • TRUST • HONESTY
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-showcase">
+    <div class="container hero-grid">
+      <div class="hero-details">
+        <span class="hero-tag">Central Kentucky Real Estate Specialist</span>
+        <h1 class="hero-title">Your Property, My Dedication.</h1>
+        <div class="hero-price">Executive Homes & Acreage | $300,000 – $900,000+</div>
+        
+        <div class="hero-stats-row">
+          <div class="hero-stat-pill">🏡 Custom Residential</div>
+          <div class="hero-stat-pill">📐 100+ Acre Expertise</div>
+          <div class="hero-stat-pill">🎖️ 23-Yr Veteran Service</div>
+        </div>
+
+        <p style="margin-bottom: 25px; font-size: 16px; color: #f1f5f9; max-width: 600px;">
+          “When you're making one of the biggest financial decisions of your life, you don't need slick sales scripts—you need clear facts, honest numbers, and an agent who puts your interests first.”
+        </p>
+
+        <div>
+          <a href="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" target="_blank" rel="noopener" class="btn-nav-cta" style="padding: 12px 24px; font-size: 15px; margin-right: 12px;">View Paragon Listings Feed</a>
+          <a href="#contact" style="color: #ffffff; font-weight: bold; text-decoration: underline; font-size: 14px;">Inquire With Patrick &rarr;</a>
+        </div>
+      </div>
+
+      <div class="hero-photo-card">
+        <img src="./headshot2.jpg" onerror="this.src='./headshot.png'" alt="Patrick C. Washington - Realtor">
       </div>
     </div>
   </section>
-</main>
 
-<!-- Floating Circular Brand Badge -->
-<aside class="floating-logo-badge">
-  <a href="#top" title="Back to top">
-    <img src="CWHOMEKY_LOGO_2.png" alt="Patrick C. Washington Badge">
-  </a>
-</aside>
+  <!-- Multi-Field Property Search -->
+  <section class="container search-section" id="search">
+    <div class="search-box">
+      <div class="search-title">
+        <span class="inline-cwhomeky-badge">
+          <img src="./CWHOMEKY_LOGO_2.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+        </span>
+        <span>Central Kentucky Property Search</span>
+      </div>
+      
+      <form action="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" method="GET" target="_blank">
+        <div class="search-form-grid">
+          
+          <div class="search-field">
+            <label>Property Type</label>
+            <select name="type">
+              <option value="all">All Types</option>
+              <option value="residential" selected>Residential Homes</option>
+              <option value="acreage">Acreage & Land</option>
+              <option value="custom">Custom Builds</option>
+              <option value="luxury">Luxury / Executive</option>
+            </select>
+          </div>
+
+          <div class="search-field">
+            <label>City / County</label>
+            <select name="city">
+              <option value="all">All Locations</option>
+              <option value="Elizabethtown" selected>Elizabethtown, KY</option>
+              <option value="Radcliff">Radcliff, KY</option>
+              <option value="Hardin County">Hardin County</option>
+              <option value="Nelson County">Nelson County</option>
+              <option value="Vine Grove">Vine Grove, KY</option>
+            </select>
+          </div>
+
+          <div class="search-field">
+            <label>Min Price</label>
+            <select name="min_price">
+              <option value="0">No Minimum</option>
+              <option value="200000">$200,000</option>
+              <option value="300000" selected>$300,000</option>
+              <option value="400000">$400,000</option>
+              <option value="500000">$500,000</option>
+            </select>
+          </div>
+
+          <div class="search-field">
+            <label>Max Price</label>
+            <select name="max_price">
+              <option value="0">No Maximum</option>
+              <option value="500000">$500,000</option>
+              <option value="700000">$700,000</option>
+              <option value="900000" selected>$900,000</option>
+              <option value="1500000">$1,500,000+</option>
+            </select>
+          </div>
+
+          <div class="search-field">
+            <label>Bedrooms</label>
+            <select name="beds">
+              <option value="all">Any Beds</option>
+              <option value="2">2+ Beds</option>
+              <option value="3" selected>3+ Beds</option>
+              <option value="4">4+ Beds</option>
+              <option value="5">5+ Beds</option>
+            </select>
+          </div>
+
+          <div class="search-field">
+            <a href="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" target="_blank" rel="noopener" class="btn-search">Search Active Listings</a>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Dedicated Active Listings Section -->
+  <section class="container" id="active-listings">
+    <div class="section-title-wrap">
+      <h2 class="section-title">
+        <span class="inline-cwhomeky-badge">
+          <img src="./CWHOMEKY_LOGO_2.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+        </span>
+        Active Listings Feed
+      </h2>
+      <p class="section-subtitle">Direct, up-to-the-minute property inventory and listing details from the Paragon MLS Portal</p>
+    </div>
+
+    <!-- Central Paragon Listings Box -->
+    <div class="paragon-banner-box">
+      <h3>Explore All Current Listings</h3>
+      <p>Access full high-resolution photo galleries, complete MLS property data sheets, interactive maps, and recent price updates directly on the official live Paragon portal.</p>
+      <a href="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" target="_blank" rel="noopener" class="btn-paragon-main">
+        🏡 Open Active Listings in Paragon Portal
+      </a>
+    </div>
+  </section>
+
+  <!-- Split About Patrick & Resources Section -->
+  <section class="container" id="about">
+    <div class="about-split">
+      
+      <!-- Resources Sidebar -->
+      <div class="resources-box">
+        <h3 class="resources-title">Client Resources</h3>
+        <ul class="resources-list">
+          <li><a href="https://zsvc.paragon.ice.com/s/goto/ZxKmW-mMMEY" target="_blank" rel="noopener">▶ Browse Current Inventory on Paragon</a></li>
+          <li><a href="#contact">▶ Free Home Market Valuation</a></li>
+          <li><a href="#contact">▶ Military PCS Relocation Help</a></li>
+          <li><a href="tel:5022305113">▶ Direct Phone Consultation</a></li>
+        </ul>
+      </div>
+
+      <!-- Bio Presentation -->
+      <div class="about-text">
+        <h2>Dedicated, Honest, and Locally Rooted</h2>
+        <p>
+          As a <strong>23-year retired military veteran</strong>, I spent over two decades trained to lead, protect, and look after service members and their families. Having relocated my own family multiple times throughout my military career, I know firsthand the real stress, tight timelines, and heavy lift of a major relocation or PCS move. I bring that exact same duty, discipline, and straightforward communication to every real estate client I serve.
+        </p>
+        <p>
+          Whether you're right here in Hardin County or looking to move to Kentucky from across the country, buying or selling real estate shouldn't be a game of hide-and-seek with the truth. I bridge the gap for out-of-town clients—having successfully managed and closed complex, <strong>100+ acre property transactions entirely remote</strong>—ensuring a seamless experience from start to finish.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Lead Capture & Contact Section -->
+  <section class="container" id="contact" style="margin-bottom: 60px;">
+    <div class="search-box" style="border-top-color: var(--gold-accent);">
+      <div class="search-title">
+        <span class="inline-cwhomeky-badge">
+          <img src="./CWHOMEKY_LOGO_2.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+        </span>
+        <span>Inquire with Patrick C. Washington</span>
+      </div>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+        Ready to schedule a showing, list your home, or request a full market value analysis? Send a direct message below.
+      </p>
+
+      <form action="mailto:pcw@cwhomeky.com" method="POST" enctype="text/plain">
+        <div class="search-form-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+          <div class="search-field">
+            <label>Full Name *</label>
+            <input type="text" name="Name" required placeholder="John Doe">
+          </div>
+          <div class="search-field">
+            <label>Phone Number *</label>
+            <input type="tel" name="Phone" required placeholder="502-230-5113">
+          </div>
+          <div class="search-field">
+            <label>Email Address *</label>
+            <input type="email" name="Email" required placeholder="john@example.com">
+          </div>
+          <div class="search-field">
+            <label>Service Needed</label>
+            <select name="Service">
+              <option value="Free Valuation">Free Home Market Valuation ($300k - $900k+)</option>
+              <option value="Buying Home">Buying a Home in Central Kentucky</option>
+              <option value="Selling Property">Selling My Property</option>
+              <option value="Military PCS">Military PCS / Out-of-State Relocation</option>
+              <option value="Land Acreage">Land & Custom Acreage</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top: 15px;">
+          <button type="submit" class="btn-search" style="background-color: var(--navy-primary); padding: 14px;">Send Message to Patrick</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-col">
+          <h4>Patrick C. Washington</h4>
+          <p>Licensed Real Estate Sales Associate</p>
+          <p>Dedication, Trust, and Honesty across Central Kentucky.</p>
+          <p style="margin-top: 10px; color: var(--gold-accent); font-weight: bold;">
+            <span class="inline-cwhomeky-badge">
+              <img src="./CWHOMEKY_LOGO_2.png" onerror="handleLogoError(this)" alt="CWHOMEKY">
+            </span>
+            cwhomeky.com
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Direct Contact</h4>
+          <p><strong>Phone:</strong> 502-230-5113</p>
+          <p><strong>Email:</strong> pcw@cwhomeky.com</p>
+          <p><strong>Office Address:</strong> 216 South Mulberry Street, Elizabethtown, Kentucky, 42701</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Brokerage</h4>
+          <p><strong>Pennington Properties</strong></p>
+          <p>216 South Mulberry Street</p>
+          <p>Elizabethtown, Kentucky, 42701</p>
+          <p style="margin-top: 10px; font-size: 12px;">Licensed in the Commonwealth of Kentucky.</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <span class="inline-cwhomeky-badge">
+            <img src="./CWHOMEKY_LOGO_2.png" onerror="handleLogoError(this)" alt="CWHOMEKY" style="width: 18px; height: 18px;">
+          </span>
+          © 2026 Patrick C. Washington | CWHOMEKY. Brokered by Pennington Properties. All Rights Reserved.
+        </div>
+        <div>Equal Housing Opportunity • Licensed REALTOR® in Kentucky</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
