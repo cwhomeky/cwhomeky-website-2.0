@@ -1,0 +1,622 @@
+```python
+from PIL import Image
+import numpy as np
+
+# Load the user's uploaded logo image
+img = Image.open('input_file_4.png').convert('RGBA')
+arr = np.array(img)
+h, w, _ = arr.shape
+
+# The outer circle center and radius
+# The logo is a circle inscribed in the image
+center_y, center_x = h / 2.0, w / 2.0
+# Let's find the radius of the outer blue circle
+# Outer circle has radius roughly 46-48% of w
+r_outer = w * 0.465
+
+# Create a circular mask for the logo outer boundary
+y_indices, x_indices = np.ogrid[:h, :w]
+dist_from_center = np.sqrt((x_indices - center_x)**2 + (y_indices - center_y)**2)
+
+# Any pixel outside the outer circle edge (dist > r_outer) should have alpha = 0
+# Let's add slight anti-aliasing near the edge
+alpha = arr[:, :, 3].copy()
+mask_outside = dist_from_center > r_outer + 2
+alpha[mask_outside] = 0
+
+# Anti-aliasing margin
+edge_zone = (dist_from_center > r_outer - 2) & (dist_from_center <= r_outer + 2)
+# linearly interpolate alpha
+for y in range(h):
+    for x in range(w):
+        d = np.sqrt((x - center_x)**2 + (y - center_y)**2)
+        if d > r_outer + 2:
+            arr[y, x, 3] = 0
+        elif d > r_outer - 2:
+            # factor between 0 and 1
+            factor = (r_outer + 2 - d) / 4.0
+            arr[y, x, 3] = int(255 * factor)
+
+# Also let's ensure the interior is solid/clean
+cleaned_img = Image.fromarray(arr)
+cleaned_img.save('logo_transparent.png', 'PNG')
+print("Successfully created transparent PNG logo_transparent.png")
+
+
+```
+
+```text
+Successfully created transparent PNG logo_transparent.png
+
+
+```
+
+# BRAINSTORM: CWHOMEKY WEBSITE (FLOATING LOGO INTEGRATION)
+
+The faux-checkerboard background has been removed, creating a transparent **`logo_transparent.png`** file.
+
+The website code has been updated with a floating brand badge in the bottom-left corner. It is scaled to **75px–85px**, features a drop shadow, stays fixed in place during scrolling, scales down cleanly on mobile screens, and smoothly scrolls visitors to the top of the page when clicked.
+
+---
+
+### Transparent Logo File
+
+Save or right-click to download this cut logo as **`logo.png`** in your repository:
+
+[file-tag: code-generated-file-e0ea792d-9442-4f7f-ba0d-aa21d20cfbb8]
+
+---
+
+### Updated `index.html` (With Floating Logo)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CWHOMEKY | Patrick C. Washington - Real Estate Sales Associate</title>
+  <meta name="description" content="Dedicated, Honest, and Trustworthy Real Estate representation across Central Kentucky. Brokered by Pennington Properties.">
+  
+  <style>
+    :root {
+      --navy-primary: #19388a;
+      --blue-brand: #0A5896;
+      --gold-accent: #f1b418;
+      --dark-pill: #0f245c;
+      --card-white: #ffffff;
+      --text-dark: #222222;
+      --text-muted: #555555;
+      --light-bg: #f4f6fa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Top Utility Bar */
+    .top-bar {
+      background-color: var(--dark-pill);
+      color: #ffffff;
+      padding: 8px 20px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .top-bar a { color: var(--gold-accent); text-decoration: none; font-weight: bold; }
+
+    /* Navigation */
+    header {
+      background-color: var(--navy-primary);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .brand-title {
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .brand-title span { color: var(--gold-accent); font-weight: 400; font-size: 16px; }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      align-items: center;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold-accent); }
+    .btn-cta {
+      background-color: var(--gold-accent);
+      color: #000000 !important;
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    /* Core Slogan Bar */
+    .slogan-bar {
+      background-color: #0e204d;
+      color: var(--gold-accent);
+      text-align: center;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 2px;
+      padding: 10px;
+      text-transform: uppercase;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--navy-primary) 0%, var(--blue-brand) 100%);
+      color: #ffffff;
+      padding: 50px 20px;
+      border-bottom: 4px solid var(--gold-accent);
+    }
+    .hero-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-text { flex: 1.2; min-width: 300px; }
+    .hero-photo-box {
+      flex: 0.8;
+      min-width: 280px;
+      text-align: center;
+    }
+    .hero-photo-box img {
+      width: 100%;
+      max-width: 340px;
+      border-radius: 10px;
+      border: 4px solid #ffffff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .agent-name {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .agent-title {
+      font-size: 18px;
+      color: var(--gold-accent);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .quote-box {
+      background: rgba(255, 255, 255, 0.08);
+      border-left: 4px solid var(--gold-accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    /* Main Content Containers */
+    .section-wrapper {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .section-card {
+      background: var(--card-white);
+      border-radius: 8px;
+      padding: 35px 30px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+    }
+    .section-heading {
+      color: var(--navy-primary);
+      font-size: 24px;
+      font-weight: 800;
+      border-bottom: 2px solid var(--gold-accent);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    /* Bio Presentation */
+    .bio-text p {
+      margin-bottom: 16px;
+      font-size: 15.5px;
+      color: #333333;
+      line-height: 1.7;
+    }
+    .value-props {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+    .prop-card {
+      background: var(--light-bg);
+      border-left: 4px solid var(--blue-brand);
+      padding: 16px;
+      border-radius: 0 6px 6px 0;
+    }
+    .prop-title {
+      font-weight: bold;
+      color: var(--navy-primary);
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    /* MLS Paragon Section */
+    .paragon-box { text-align: center; }
+    .paragon-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+    .btn-paragon {
+      background-color: var(--blue-brand);
+      color: #ffffff;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      box-shadow: 0 3px 10px rgba(10, 88, 150, 0.3);
+      transition: background 0.2s;
+    }
+    .btn-paragon:hover { background-color: var(--navy-primary); }
+    .btn-paragon-gold {
+      background-color: var(--gold-accent);
+      color: #000000;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+    .iframe-wrapper {
+      width: 100%;
+      height: 750px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      background: #ffffff;
+    }
+    .iframe-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Lead Form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-full { grid-column: span 2; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .btn-submit {
+      background-color: var(--navy-primary);
+      color: #ffffff;
+      border: none;
+      padding: 14px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .btn-submit:hover { background-color: var(--blue-brand); }
+
+    /* Footer Info */
+    footer {
+      background-color: #0b173b;
+      color: #ffffff;
+      border-top: 4px solid var(--gold-accent);
+      padding: 40px 20px 20px 20px;
+    }
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+    }
+    .footer-col h4 {
+      color: var(--gold-accent);
+      font-size: 16px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .footer-col p, .footer-col a {
+      color: #cccccc;
+      font-size: 13.5px;
+      text-decoration: none;
+      line-height: 1.7;
+    }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 30px auto 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #888888;
+    }
+
+    /* Floating Bottom-Left Logo Badge */
+    .floating-logo-badge {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 9999;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s ease;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
+    }
+    .floating-logo-badge:hover {
+      transform: scale(1.08) translateY(-3px);
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.45));
+    }
+    .floating-logo-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .hero-container { flex-direction: column-reverse; text-align: center; }
+      .quote-box { border-left: none; border-top: 4px solid var(--gold-accent); }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-full { grid-column: span 1; }
+      .iframe-wrapper { height: 500px; }
+      .floating-logo-badge {
+        bottom: 16px;
+        left: 16px;
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <!-- Floating Fixed Logo (Bottom Left) -->
+  <a href="#top" class="floating-logo-badge" title="Patrick C. Washington - Return to Top">
+    <img src="logo.png" alt="CWHOMEKY Patrick C. Washington Logo">
+  </a>
+
+  <!-- Top Contact Bar -->
+  <div class="top-bar">
+    <div>📍 Servicing Hardin County & Central Kentucky | Brokered by Pennington Properties</div>
+    <div>
+      Direct: <a href="tel:5022305113">(502) 230-5113</a> &nbsp;|&nbsp; 
+      <a href="mailto:pcw@cwhomeky.com">pcw@cwhomeky.com</a>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="brand-title">CWHOMEKY <span>| Patrick C. Washington</span></div>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#listings">Active Listings</a></li>
+          <li><a href="#why-work-with-me">Why Patrick</a></li>
+          <li><a href="#contact" class="btn-cta">Contact / Evaluation</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Core Slogan -->
+  <div class="slogan-bar">
+    DEDICATION • TRUST • HONESTY
+  </div>
+
+  <!-- Hero Section with Headshot -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-text">
+        <h1 class="agent-name">PATRICK C. WASHINGTON</h1>
+        <div class="agent-title">Sales Associate • Pennington Properties</div>
+        
+        <div class="quote-box">
+          “When you're making one of the biggest financial decisions of your life, you don't need slick sales scripts or high-pressure tactics—you need clear facts, honest numbers, and an agent who puts your interests first.”
+        </div>
+
+        <div>
+          <a href="#listings" class="btn-paragon" style="margin-right: 10px;">Browse Available Properties</a>
+          <a href="#contact" class="btn-paragon-gold">Request Home Valuation</a>
+        </div>
+      </div>
+
+      <div class="hero-photo-box">
+        <img src="headshot.png" alt="Patrick C. Washington - Realtor">
+      </div>
+    </div>
+  </section>
+
+  <!-- Bio & Background Section -->
+  <main class="section-wrapper" id="about">
+    <div class="section-card">
+      <h2 class="section-heading">About Patrick C. Washington</h2>
+      
+      <div class="bio-text">
+        <p>
+          As a <strong>23-year retired military veteran</strong>, I spent over two decades trained to lead, protect, and look after service members and their families. Having packed up and relocated my own family multiple times throughout my military career, I know firsthand the real stress, tight timelines, and heavy lift of a major relocation or PCS move. I bring that exact same duty, discipline, and straightforward communication to every real estate client I serve.
+        </p>
+        <p>
+          Whether you're right here in Hardin County or looking to move to Kentucky from across the country, buying or selling real estate shouldn't be a game of hide-and-seek with the truth. I bridge the gap for out-of-town clients—having successfully managed and closed complex, <strong>100+ acre property transactions entirely remote</strong>—ensuring a seamless experience from start to finish.
+        </p>
+      </div>
+
+      <div id="why-work-with-me" style="margin-top: 35px;">
+        <h3 style="color: var(--navy-primary); font-size: 19px; font-weight: bold; margin-bottom: 15px;">WHEN YOU WORK WITH ME, YOU GET:</h3>
+        
+        <div class="value-props">
+          <div class="prop-card">
+            <div class="prop-title">Zero-Fluff Communication</div>
+            <div>Straight talk, market reality, and no hidden surprises.</div>
+          </div>
+          
+          <div class="prop-card">
+            <div class="prop-title">Proven Long-Distance Expertise</div>
+            <div>Dedicated support for military PCS moves and out-of-state buyers navigating the local market.</div>
+          </div>
+
+          <div class="prop-card">
+            <div class="prop-title">Unwavering Integrity</div>
+            <div>A partner who handles your home purchase or sale with the highest standard of trust and dedication.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paragon MLS Listings Section -->
+    <div class="section-card paragon-box" id="listings">
+      <h2 class="section-heading" style="text-align: left;">Available & Featured MLS Listings</h2>
+      <p style="text-align: left; color: var(--text-muted); margin-bottom: 25px;">
+        Explore current properties and direct MLS listings available across Central Kentucky through the Paragon real estate portal.
+      </p>
+
+      <div class="paragon-actions">
+        <a href="#" target="_blank" class="btn-paragon" id="paragonDirectLink">🔗 Open Full MLS Search in New Window</a>
+        <a href="#contact" class="btn-paragon-gold">Inquire About a Specific Listing</a>
+      </div>
+
+      <div class="iframe-wrapper">
+        <iframe src="https://hcky.paragonrels.com/" id="paragonIframe" title="Paragon MLS Live Listings"></iframe>
+      </div>
+    </div>
+
+    <!-- Lead Capture & Contact Section -->
+    <div class="section-card" id="contact">
+      <h2 class="section-heading">Contact Patrick / Free Home Evaluation</h2>
+      <p style="margin-bottom: 20px; color: var(--text-muted);">
+        Ready to buy, sell, or simply want to know what your Central Kentucky home is worth in today's market? Send a message below.
+      </p>
+
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your Full Name *</label>
+            <input type="text" name="name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" name="phone" required placeholder="(502) 000-0000">
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" name="email" required placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label>What Can I Help You With?</label>
+            <select name="service_type">
+              <option value="Home Valuation">Free Home Market Valuation ($300k - $900k+)</option>
+              <option value="Buying a Home">Buying a Home in Central Kentucky</option>
+              <option value="Selling a Home">Selling My Home</option>
+              <option value="Military / PCS Relocation">Military Relocation / PCS Move</option>
+              <option value="Land / Custom Acreage">Land & Acreage Properties</option>
+              <option value="Other Inquiry">General Real Estate Question</option>
+            </select>
+          </div>
+          <div class="form-group form-full">
+            <label>Property Address / Notes / Timeline</label>
+            <textarea name="message" rows="4" placeholder="Tell me a bit about your property or what you're looking for..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit">Submit Request to Patrick</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer Information -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Patrick C. Washington</h4>
+        <p>Licensed Real Estate Sales Associate</p>
+        <p>Dedication, Trust, and Honesty in every transaction across Central Kentucky.</p>
+        <p style="margin-top: 10px; color: var(--gold-accent); font-weight: bold;">CWHOMEKY.COM</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Direct Contact</h4>
+        <p><strong>Direct Line:</strong> (502) 230-5113</p>
+        <p><strong>Email:</strong> pcw@cwhomeky.com</p>
+        <p><strong>Location:</strong> Hardin County, Elizabethtown, KY</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Brokerage</h4>
+        <p><strong>Pennington Properties</strong></p>
+        <p>Elizabethtown, Kentucky</p>
+        <p style="margin-top: 10px; font-size: 12px;">Licensed in the Commonwealth of Kentucky.</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Patrick C. Washington | CWHOMEKY. Brokered by Pennington Properties. Equal Housing Opportunity.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+```
