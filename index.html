@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -417,6 +418,36 @@
       border-radius: 50%;
     }
 
+    /* Floating Fixed Certificate Badge (Bottom Right) */
+    .floating-cert-badge {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      width: 100px;
+      height: 77px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s, filter 0.2s;
+      filter: drop-shadow(0 6px 16px rgba(15, 36, 92, 0.5));
+      border-radius: 8px;
+      background: rgba(255,255,255,0.9);
+      padding: 4px;
+      border: 2px solid var(--gold-accent);
+    }
+    .floating-cert-badge:hover {
+      transform: scale(1.1) translateY(-3px);
+      filter: drop-shadow(0 10px 22px rgba(15, 36, 92, 0.65));
+    }
+    .floating-cert-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
+    }
+
     /* Inline Logo Badge */
     .inline-cwhomeky-badge {
       display: inline-flex;
@@ -474,16 +505,21 @@
       .about-split { grid-template-columns: 1fr; }
       .hero-grid { flex-direction: column-reverse; text-align: center; }
       .floating-logo-badge { bottom: 16px; left: 16px; width: 62px; height: 62px; }
+      .floating-cert-badge { bottom: 16px; right: 16px; width: 78px; height: 60px; }
     }
   </style>
 </head>
 <body id="top">
 
-    <a href="#top" class="floating-logo-badge" title="Patrick C. Washington | CWHOMEKY - Return to Top">
+  <a href="#top" class="floating-logo-badge" title="Patrick C. Washington | CWHOMEKY - Return to Top">
     <img src="logo.jpg" class="site-logo-target" alt="CWHOMEKY Logo">
   </a>
 
-    <div class="top-header">
+  <div class="floating-cert-badge" title="Military Relocation Professional (MRP) Certification">
+    <img src="certificate.png" alt="MRP Certification">
+  </div>
+
+  <div class="top-header">
     <div class="container top-header-flex">
       <div>📍 216 South Mulberry Street, Elizabethtown, KY 42701 | Brokered by Pennington Properties</div>
       <div>
@@ -493,7 +529,7 @@
     </div>
   </div>
 
-    <header>
+  <header>
     <div class="container nav-flex">
       <a href="https://cwhomeky.com" class="brand-group">
         <img src="logo.jpg" alt="CWHOMEKY Logo" class="brand-logo-img site-logo-target">
@@ -511,11 +547,11 @@
     </div>
   </header>
 
-    <div class="slogan-strip">
+  <div class="slogan-strip">
     DEDICATION • TRUST • HONESTY
   </div>
 
-    <section class="hero-showcase">
+  <section class="hero-showcase">
     <div class="container hero-grid">
       <div class="hero-details">
         <span class="hero-tag">Central Kentucky Real Estate Specialist</span>
@@ -544,7 +580,7 @@
     </div>
   </section>
 
-    <section class="container search-section" id="search">
+  <section class="container search-section" id="search">
     <div class="search-box">
       <div class="search-title">
         <span class="inline-cwhomeky-badge">
@@ -621,7 +657,7 @@
     </div>
   </section>
 
-    <section class="container" id="active-listings">
+  <section class="container" id="active-listings">
     <div class="section-title-wrap">
       <h2 class="section-title">
         <span class="inline-cwhomeky-badge">
@@ -641,7 +677,7 @@
     </div>
   </section>
 
-    <section class="container" id="about">
+  <section class="container" id="about">
     <div class="about-split">
       
       <div class="resources-box">
@@ -667,7 +703,7 @@
     </div>
   </section>
 
-    <section class="container" id="contact" style="margin-bottom: 60px;">
+  <section class="container" id="contact" style="margin-bottom: 60px;">
     <div class="search-box" style="border-top-color: var(--gold-accent);">
       <div class="search-title">
         <span class="inline-cwhomeky-badge">
@@ -712,7 +748,7 @@
     </div>
   </section>
 
-    <footer>
+  <footer>
     <div class="container">
       <div class="footer-grid">
         
@@ -757,7 +793,7 @@
     </div>
   </footer>
 
-    <script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       const candidateFiles = [
         'logo.jpg',
@@ -784,3 +820,5 @@
 
 </body>
 </html>
+
+```
